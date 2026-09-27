@@ -2,6 +2,10 @@ package domain
 
 type ProjectID string
 
+func (p ProjectID) String() string {
+	return string(p)
+}
+
 type Project struct {
 	id    ProjectID
 	name  string

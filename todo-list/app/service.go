@@ -12,10 +12,6 @@ type ProjectApp struct {
 	eventDispatcher domain.EventDispatcher
 }
 
-type ProjectEventListener struct {
-	projectRepo domain.ProjectRepository
-}
-
 func NewProjectApp(projectRepo domain.ProjectRepository, taskRepo domain.TaskRepository, dispatcher domain.EventDispatcher) *ProjectApp {
 	return &ProjectApp{
 		projectRepo:     projectRepo,
@@ -66,20 +62,5 @@ func (p *ProjectApp) AddTaskToProject(ctx context.Context, taskID string, projec
 		return fmt.Errorf("failed to save project: %w", err)
 	}
 
-	return nil
-}
-
-func (h *ProjectEventListener) OnTaskCompleted(ctx context.Context, event domain.TaskCompleted) error {
-	if event.ProjectID == "" {
-		return nil
-	}
-	project, err := h.projectRepo.FindById(ctx, event.ProjectID)
-	if err != nil {
-		return fmt.Errorf("failed to find project: %w", err)
-	}
-	project.RemoveTask(event.TaskID)
-	if err := h.projectRepo.Save(ctx, project); err != nil {
-		return fmt.Errorf("failed to save project: %w", err)
-	}
 	return nil
 }

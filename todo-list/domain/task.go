@@ -11,6 +11,11 @@ const (
 )
 
 type TaskID string
+
+func (t TaskID) String() string {
+	return string(t)
+}
+
 type TaskStatus string
 
 type Task struct {
