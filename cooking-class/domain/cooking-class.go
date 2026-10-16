@@ -80,13 +80,12 @@ func (c *CookingClass) AddBooking(name, contact string) (*Booking, error) {
 	if len(confirmedBookings) < c.maxSeat {
 		booking.status = "CONFIRMED"
 		confirmedBookings = append(confirmedBookings, booking)
+		if len(confirmedBookings) == c.maxSeat {
+			fullEvent := NewClassBecameFull(c.ID)
+			c.fullEvents = append(c.fullEvents, fullEvent)
+		}
 	}
 	c.bookings = append(c.bookings, booking)
-
-	if len(confirmedBookings) == c.maxSeat {
-		fullEvent := NewClassBecameFull(c.ID)
-		c.fullEvents = append(c.fullEvents, fullEvent)
-	}
 	return booking, nil
 }
 

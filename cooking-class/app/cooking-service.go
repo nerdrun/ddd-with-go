@@ -24,7 +24,7 @@ func (s *CookingService) AddBooking(cookingClassID string) error {
 
 	// I don't know how to pop the events here
 	for _, event := range cookingClass.PopEvents() {
-		event.Dispatch()
+		event.EventName()
 	}
 
 	return nil
