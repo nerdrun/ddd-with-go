@@ -97,9 +97,7 @@ func (c *CookingClass) PopEvents() []*ClassBecameFullEvent {
 
 func isAlreadyParticipated(participant *Participant, bookings []*Booking) bool {
 	for _, b := range bookings {
-		// Go compares struct values by comparing each field. If all fields are equal, the structs are considered equal.
-		// But if we treat Participant as a entity and we want to compare them by their identity (e.g., a unique ID).
-		if b.participant == participant {
+		if b.participant.Name == participant.Name && b.participant.Contact == participant.Contact {
 			return true
 		}
 	}
